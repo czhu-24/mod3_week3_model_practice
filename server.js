@@ -55,6 +55,18 @@ app.get('/books/:id', async (req, res) => {
     res.send(foundBooks);
 })
 
+// create
+// which i think can insert one or more documents into a collection
+app.post('/book', async (req, res) => {
+    try{
+        const book = req.body;
+        const dbResponse = await Book.create(book);
+        res.status(201).send(dbResponse);
+    }catch(error){
+        res.status(500).send("server error", error);
+    }
+})
+
 // insertMany
 app.post('/books', async (req, res) => {
     try {
@@ -84,7 +96,10 @@ app.put('/books/:id', async (req, res) => {
 app.delete('/books/:bookTitlePattern', async(req, res) => {
     try{
         const bookTitlePattern = req.params.bookTitlePattern;
-        // case-insensitive flag
+        // case-insensitive flag is 'i'
+        // other flag is 'g' for global matching (match all occurences in the string not just the first one) -- tbh i'm not sure how this is useful???
+        // multiline matching is 'm'
+        // if you want case-sensitive, leave out the flag
         const regexPattern = new RegExp(bookTitlePattern, 'i');
         const dbResponse = await Book.deleteMany({title: regexPattern});
         res.status(200).send(dbResponse);
