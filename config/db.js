@@ -2,7 +2,11 @@
 
 const mongoose = require('mongoose');
 
-let connectionString = `mongodb+srv://userOne:${process.env.MONGO_PASS}@cluster0.loes5ey.mongodb.net/Company?retryWrites=true&w=majority`
+const password = process.env.MONGO_PASS;
+
+const database = "Project"
+
+const connectionString = `mongodb+srv://blueinkstains:${password}@cluster0.z1lshiz.mongodb.net/${database}?retryWrites=true&w=majority`;
 
 mongoose.connect(connectionString, {
     useNewUrlParser: true,
